@@ -1,0 +1,55 @@
+<ActionBar class="action-bar">
+  <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+  <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left"></ActionItem>
+  <Label text="Búsqueda de Funcionalidades"></Label>
+</ActionBar>
+
+<GridLayout rows="auto, *" class="search-page">
+  <!-- Requisito 6: Formulario de búsqueda con sintaxis [()] Two-Way Binding -->
+  <GridLayout row="0" columns="*, auto" class="search-bar-container">
+    <TextField
+      col="0"
+      [(ngModel)]="terminoBusqueda"
+      (ngModelChange)="filtrarItems()"
+      hint="Buscar por nombre o categoría..."
+      class="search-input"
+    ></TextField>
+    <Button col="1" text="Buscar" (tap)="onBuscarTap()" class="search-btn"></Button>
+  </GridLayout>
+
+  <!-- Requisito 3: PullToRefresh envolviendo el ListView -->
+  <PullToRefresh row="1" (refresh)="onPullToRefresh($event)">
+    <!-- Requisito 1 y 2: ListView con plantilla anidada con FlexboxLayout y evento itemTap -->
+    <ListView [items]="itemsFiltrados" (itemTap)="onItemTap($event)" class="list-group">
+      <ng-template let-item="item">
+        <FlexboxLayout flexDirection="row" justifyContent="space-between" alignItems="center" class="list-item-flex">
+          <!-- Ícono con detección de gestos (doubleTap / longPress) y animación (Requisitos 8 y 9) -->
+          <FlexboxLayout
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            class="fav-badge"
+            [class.fav-active]="item.favorito"
+            (doubleTap)="onFavoritoDoubleTap(item, $event)"
+            (longPress)="onFavoritoLongPress(item, $event)"
+          >
+            <Label [text]="item.favorito ? '★' : '☆'" class="fav-icon"></Label>
+          </FlexboxLayout>
+
+          <!-- Información principal -->
+          <FlexboxLayout flexDirection="column" flexGrow="1" class="item-info-flex">
+            <Label [text]="item.nombre" class="item-title"></Label>
+            <Label [text]="item.categoria + ' • $' + item.precio + ' USD'" class="item-subtitle"></Label>
+          </FlexboxLayout>
+
+          <!-- Requisito 4: Botón/ícono que dispara el diálogo tipo "action" -->
+          <Button
+            text="Categoría"
+            (tap)="cambiarCategoria(item, $event)"
+            class="btn-categoria-action"
+          ></Button>
+        </FlexboxLayout>
+      </ng-template>
+    </ListView>
+  </PullToRefresh>
+</GridLayout>

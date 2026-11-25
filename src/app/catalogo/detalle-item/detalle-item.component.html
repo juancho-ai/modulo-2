@@ -1,0 +1,86 @@
+<ActionBar title="Detalle y Edición">
+  <NavigationButton text="Atrás" android.systemIcon="ic_menu_back" (tap)="volver()"></NavigationButton>
+</ActionBar>
+
+<ScrollView>
+  <StackLayout class="p-20" *ngIf="item">
+    <!-- Ícono con detección de gestos (doubleTap / longPress) y animación (Requisitos 8 y 9) -->
+    <Image
+      #iconoDetalle
+      src="res://ic_catalogo_custom"
+      width="72"
+      height="72"
+      horizontalAlignment="center"
+      class="m-b-12"
+      (doubleTap)="onIconoDoubleTap($event)"
+      (longPress)="onIconoLongPress($event)"
+    ></Image>
+
+    <Label text="Doble toque o pulsación larga en el ícono para animar" class="text-center text-muted m-b-16" fontSize="12"></Label>
+
+    <!-- Formulario interactivo con Two-Way Binding [()] y Directiva Validadora Personalizada (Requisitos 6 y 7) -->
+    <StackLayout #detalleForm="ngForm" ngForm>
+      <Label text="Nombre del elemento (mín. 5 caracteres sin espacios extra):" class="font-weight-bold m-t-8"></Label>
+      <TextField
+        name="nombre"
+        [(ngModel)]="item.nombre"
+        #nombreCtrl="ngModel"
+        [nsMinLongitudSinEspacios]="5"
+        class="input input-border p-10 m-t-4"
+        hint="Nombre del elemento"
+      ></TextField>
+
+      <Label
+        *ngIf="nombreCtrl.invalid && (nombreCtrl.dirty || nombreCtrl.touched)"
+        text="Error: El nombre debe tener al menos 5 caracteres válidos (Directiva personalizada)."
+        class="error-validacion"
+        textWrap="true"
+      ></Label>
+
+      <Label text="Categoría:" class="font-weight-bold m-t-12"></Label>
+      <TextField
+        name="categoria"
+        [(ngModel)]="item.categoria"
+        #catCtrl="ngModel"
+        [nsMinLongitudSinEspacios]="3"
+        class="input input-border p-10 m-t-4"
+        hint="Categoría"
+      ></TextField>
+
+      <Label text="Precio (USD):" class="font-weight-bold m-t-12"></Label>
+      <TextField
+        name="precio"
+        [(ngModel)]="item.precio"
+        keyboardType="number"
+        class="input input-border p-10 m-t-4"
+        hint="Precio"
+      ></TextField>
+
+      <Label text="Descripción:" class="font-weight-bold m-t-12"></Label>
+      <TextView
+        name="descripcion"
+        [(ngModel)]="item.descripcion"
+        #descCtrl="ngModel"
+        [nsMinLongitudSinEspacios]="10"
+        height="90"
+        class="input input-border p-10 m-t-4"
+        hint="Descripción detallada"
+      ></TextView>
+
+      <Label
+        *ngIf="descCtrl.invalid && (descCtrl.dirty || descCtrl.touched)"
+        text="Error: La descripción requiere mínimo 10 caracteres."
+        class="error-validacion"
+      ></Label>
+
+      <Button
+        text="Guardar Cambios"
+        [isEnabled]="detalleForm.valid"
+        (tap)="guardarCambios(detalleForm.valid)"
+        class="-primary m-t-20"
+      ></Button>
+
+      <Button text="Volver al Listado" (tap)="volver()" class="-outline m-t-8"></Button>
+    </StackLayout>
+  </StackLayout>
+</ScrollView>

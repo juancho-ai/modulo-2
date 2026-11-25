@@ -1,0 +1,61 @@
+.page-container {
+  padding: 16;
+}
+
+.banner-plataforma {
+  padding: 14;
+  border-radius: 10;
+  margin-bottom: 16;
+  background-color: #e2e8f0;
+}
+
+.banner-icon {
+  margin-right: 12;
+}
+
+.banner-titulo {
+  font-size: 18;
+  font-weight: bold;
+}
+
+.banner-subtitulo {
+  font-size: 13;
+  margin-top: 4;
+}
+
+.section-heading {
+  font-size: 15;
+  font-weight: bold;
+  margin-bottom: 10;
+  color: #334155;
+}
+
+.tarjeta-item {
+  padding: 14;
+  margin-bottom: 12;
+  border-radius: 8;
+  background-color: #ffffff;
+  border-width: 1;
+  border-color: #cbd5e1;
+}
+
+.item-titulo {
+  font-size: 16;
+  font-weight: bold;
+}
+
+.item-precio {
+  font-size: 15;
+  font-weight: bold;
+}
+
+.item-categoria {
+  font-size: 12;
+  margin-top: 2;
+}
+
+.item-descripcion {
+  font-size: 13;
+  margin-top: 6;
+  color: #475569;
+}
